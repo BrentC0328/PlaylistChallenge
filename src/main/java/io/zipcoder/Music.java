@@ -13,51 +13,52 @@ public class Music {
     }
 
     public Integer selection(Integer startIndex, String selection) {
+        //we need a counter.
+        //We can check against the array length. There should be no possible combination that goes past the array length.
+        //if array start index is selection stop count
+        //else add to index. keep going.
+        //if index == the length we go back to 0.
+        //do the reverse for the lower.
+
         int counter = 0;
-        int reverseCounter = 0;
-        int defaultStart = startIndex;
-        //Have a playlist of arrays. Find the string selection's index in the array to make it a number.
-        List<String> theList = new ArrayList<String>(Arrays.asList(playList));
-        for (String song : playList) {
-            theList.add(song);
-        }
-        int selectionNumber = theList.indexOf(selection);
-        //While the startIndex is not equal to the selection number
+        int startIndexTwo = startIndex;
 
-        while (startIndex != selectionNumber) {
-            counter++;
-            startIndex++;
-            if (startIndex == playList.length) {
+        for (int i = 0; i < playList.length; i++) {
+            String song = playList[startIndex];
+
+            if (song.equals(selection)){
+                break;
+            }
+
+            if(startIndex == playList.length - 1){
                 startIndex = 0;
-            }
-        }
-
-        startIndex = defaultStart;
-
-        while (startIndex != selectionNumber) {
-
-            if (startIndex == 0) {
-                startIndex = playList.length ;
-                reverseCounter++;
+                counter++;
             } else {
-                reverseCounter++;
-                startIndex--;
+                counter++;
+                startIndex += 1;
+
+        } }
+
+            int counterTwo = 0;
+            for (int i = 0; i < playList.length; i++) {
+                String song = playList[startIndexTwo];
+                if (song.equals(selection)){
+                    break;
+                }
+                if(startIndexTwo == 0){
+                    startIndexTwo = playList.length -1;
+                    counterTwo++;
+                } else { counterTwo++;
+                    startIndexTwo -= 1;
+
+                }
+
+
+
             }
-
-        }
-
-        //startIndex go up one and counter go up one.
-        //If Start index goes over the last index, reset start index to 0 on next count.
-        //return count once startIndex and selection number are equal.
-
-
-        if (counter >= reverseCounter) {
-            return Math.abs(reverseCounter);
-        } else {
-
-            return counter;
-        }
+            return Math.min(counter, counterTwo);
 
     }
 }
+
 
